@@ -36,11 +36,11 @@ pipeline{
             }
         }
 
-         // Install dependencies
+        // Test 
         stage("Test App"){
             steps{
                 script {
-                    sh 'node test'
+                    sh 'npm test'
                 }
             }
         }
