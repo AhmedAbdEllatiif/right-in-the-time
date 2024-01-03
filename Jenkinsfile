@@ -1,4 +1,6 @@
 
+@library ('jenkins-shared-library')
+
 // the commit id is the current image version
 def IMAGE_TAG 
 
@@ -36,11 +38,11 @@ pipeline{
             }
         }
 
-         // Install dependencies
+        // Test 
         stage("Test App"){
             steps{
                 script {
-                    sh 'node test'
+                    sh 'npm test'
                 }
             }
         }
@@ -67,7 +69,7 @@ pipeline{
             }
             steps{
                 script {
-                   sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                   buildImage "${IMAGE_NAME}" "${IMAGE_TAG}"
                 }
             }
         }
@@ -81,14 +83,9 @@ pipeline{
             }
             steps{
                 script {
-                       withCredentials(
-                                [usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]
-                                ) {
-                        
-                                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin '
-                                
-                                    sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
-                        }
+                    dockerLogin()
+                
+                    dockerPush "${IMAGE_NAME}" "${IMAGE_TAG}"
                 }
             }
 
