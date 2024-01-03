@@ -69,7 +69,7 @@ pipeline{
             }
             steps{
                 script {
-                   buildImage "${IMAGE_NAME}" "${IMAGE_TAG}"
+                   buildImage ("${IMAGE_NAME}", "${IMAGE_TAG}")
                 }
             }
         }
@@ -85,7 +85,7 @@ pipeline{
                 script {
                     dockerLogin()
                 
-                    dockerPush "${IMAGE_NAME}" "${IMAGE_TAG}"
+                    dockerPush ("${IMAGE_NAME}", "${IMAGE_TAG}")
                 }
             }
 
