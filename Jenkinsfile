@@ -1,5 +1,5 @@
 
-@library ('jenkins-shared-library')
+@Library ('jenkins-shared-library')
 
 // the commit id is the current image version
 def IMAGE_TAG 
